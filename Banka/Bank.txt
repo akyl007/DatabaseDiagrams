@@ -1,0 +1,3 @@
+Toto relační schéma je transformace ze schématu ER. Všiml jsem si, že jsem udělal schéma jinak než v cviku, 
+takže jsem se pokusil udělat maximum bez chyb. Každá entita má spojení s konkrétní entitou a je propojena pomocí adresování.
+ Soukromá banka, která má svého majitele a zaměstnance. A také bankovní systém spojuje jejich práci se zákazníky.

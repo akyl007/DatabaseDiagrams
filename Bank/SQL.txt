@@ -1,0 +1,4 @@
+Zde je relační schéma převedené na příkazy SQL. V průběhu vytváření jsem 
+postupně kontroloval obsah kódů prostřednictvím webu adminer.org. Došlo k 
+chybám s adresami a během procesu jsem musel odstranit jejich adresy z 
+některých entit. Obecně to trvalo asi 2-3 hodiny

@@ -1,0 +1,109 @@
+DROP TABLE Customer CASCADE;
+
+CREATE TABLE Customer(
+CustomerID VARCHAR(20) PRIMARY KEY,
+Email VARCHAR(60) NOT NULL UNIQUE,
+Name VARCHAR(50) NOT NULL,
+CONSTRAINT Customer_ch_email CHECK (email LIKE '_%@_%.__%')
+);
+
+DROP TABLE "Address" CASCADE;
+
+CREATE TABLE "Address"(
+CustomerID VARCHAR(30) NOT NULL CONSTRAINT Address_FK_customer REFERENCES Customer (CustomerID),
+city VARCHAR(20) NOT NULL,
+street VARCHAR(20) NOT NULL,
+post_code VARCHAR(15) NOT  NULL,
+PRIMARY KEY(CustomerID, post_code)
+);
+
+DROP TABLE "Makes" CASCADE;
+
+CREATE TABLE "Makes"(
+Customer VARCHAR(20) NOT NULL ,
+Drawingup VARCHAR(20) NOT NULL CONSTRAINT Makes_FK_drawingup REFERENCES Drawingup (ID),
+CONSTRAINT Makes_FK_customer FOREIGN KEY (Customer) REFERENCES Customer (CustomerID),
+PRIMARY KEY (Customer)
+);
+
+DROP TABLE Drawingup CASCADE;
+
+CREATE TABLE Drawingup(
+ID VARCHAR(20) NOT NULL UNIQUE,
+Customer VARCHAR(10) CONSTRAINT Drawingup_FK_customer REFERENCES Customer (CustomerID),
+type VARCHAR(20) NOT NULL,
+PRIMARY KEY (ID, Customer)
+);
+
+DROP TABLE Corresponds CASCADE;
+
+CREATE TABLE Corresponds(
+Drawingup VARCHAR(20) NOT NULL CONSTRAINT Corresponds_FK_drawingup REFERENCES Drawingup (ID),
+product VARCHAR(20) NOT NULL CONSTRAINT Corresponds_FK_product REFERENCES product (productID),
+PRIMARY KEY (drawingup)
+);
+
+DROP TABLE Product CASCADE;
+
+CREATE TABLE Product(
+ProductID VARCHAR(20) NOT NULL UNIQUE,
+services VARCHAR(30) NOT NULL REFERENCES Services(ServicesID) ,
+type VARCHAR(20) NOT NULL,
+PRIMARY KEY(productID, services)
+);
+
+DROP TABLE Contains CASCADE;
+
+CREATE TABLE Contains(
+productID VARCHAR(20) NOT NULL REFERENCES Product(productID),
+services VARCHAR(30) NOT NULL REFERENCES Services(ServicesID),
+PRIMARY KEY(productID)
+);
+
+DROP TABLE Services CASCADE;
+
+CREATE TABLE Services(
+ServicesID VARCHAR(20) NOT NULL,
+name VARCHAR(30) NOT NULL,
+PRIMARY KEY(ServicesID)
+);
+
+DROP TABLE Bank CASCADE;
+CREATE TABLE Bank(
+ID VARCHAR(20) NOT NULL,
+name VARCHAR(20) NOT NULL,
+PRIMARY KEY(ID)
+);
+
+DROP TABLE "Includes" CASCADE;
+
+CREATE TABLE "Includes"(
+Bank VARCHAR(20) NOT NULL REFERENCES Bank(ID),
+services VARCHAR(30) NOT NULL REFERENCES Services(ServicesID),
+PRIMARY KEY(Bank)
+);
+
+DROP TABLE "Manages" CASCADE;
+
+CREATE TABLE "Manages"(
+Employee VARCHAR(20) NOT NULL REFERENCES Employee(ID),
+PRIMARY KEY (Employee)
+);
+
+DROP TABLE Owner CASCADE;
+
+CREATE TABLE Owner(
+name VARCHAR(20) NOT NULL,
+email VARCHAR(30) NOT NULL,
+manages VARCHAR(20) NOT NULL REFERENCES "Manages"(Employee),
+PRIMARY KEY (name)
+);
+
+DROP TABLE Employee CASCADE;
+
+CREATE TABLE Employee(
+ID VARCHAR(20) NOT NULL,
+name VARCHAR(30) NOT NULL,
+email VARCHAR(30) NOT NULL,
+PRIMARY KEY(ID)
+);
